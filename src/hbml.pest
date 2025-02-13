@@ -1,0 +1,47 @@
+// HBML Grammar for Pest
+
+// Root rule
+document = { SOI ~ element* ~ EOI }
+
+// Elements
+element = { selector ~ (element | braced_content | self_closing) | text }
+identifier = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "-" | "_")* }
+selector = { tag ~ ("#" ~ id)? ~ ("." ~ class)* ~ attributes? }
+tag = @{ identifier }
+id = @{ identifier }
+class = @{ identifier }
+
+// Attributes
+attributes = { "[" ~ attribute ~ (","? ~ attribute)* ~ "]" }
+attribute = { key ~ "=" ~ value }
+key = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "-" | "_")* }
+value = { "\"" ~ ( !"\"" ~ ANY )* ~ "\"" }
+
+// Content
+braced_content = { "{" ~ (element)* ~ "}" }
+text = ${ "\"" ~ inner ~ "\"" }
+inner = @{ char* }
+char = {
+    !("\"" | "\\") ~ ANY
+    | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+// Self-closing elements
+self_closing = { ";" }
+
+// Whitespace and comments
+WHITESPACE = _{ " " | "\t" | "\n" | "\r" | line_comment | block_comment }
+
+// Comments
+COMMENT = ${ html_line_comment | html_block_comment }
+lc_text = { (!"\n" ~ ANY)* }
+bc_text = { (!("*/"|"-*/") ~ ANY)* }
+comment_ws = { !("\n" | "-") }
+
+line_comment = _{ "//" ~ comment_ws ~ lc_text }
+block_comment = _{ "/*" ~ comment_ws ~ bc_text ~ comment_ws ~ "*/" }
+
+html_line_comment = _{ "//-" ~ lc_text }
+html_block_comment = _{ "/*-" ~ bc_text ~ "-*/" }
+
