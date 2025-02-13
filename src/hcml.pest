@@ -1,0 +1,60 @@
+WHITESPACE = _{
+    " "
+  | "\t"
+  | NEWLINE
+  | line_comment
+  | block_comment
+}
+
+COMMENT = ${ html_line_comment | html_block_comment }
+
+// Tags
+ident = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "-" | "_")* }
+
+name    = @{ ident }
+id      = @{ ident }
+class   = @{ ident }
+s_id    = _{ "#" ~ id }
+s_class = _{ "." ~ class }
+
+attribute  = @{ ident ~ ("=" ~ string)? }
+attributes =  { "(" ~ (attribute ~ ","?)* ~ ")" }
+
+tag = {
+    (name ~ s_id? | s_id | s_class) ~ (s_class)* ~ attributes?
+}
+
+// Elements and blocks
+html_element = { tag ~ (element | self_closing) }
+element      = { html_element | string | lit_string | block }
+
+block        =  { "{" ~ element_list ~ "}" }
+self_closing = _{ ";" }
+
+element_list = _{ element* }
+
+// Strings
+string     = ${ "\"" ~ inner ~ "\"" }
+inner      = @{ (!"\"" ~ ANY)* }
+lit_string = ${ PUSH("#"*) ~ "\"" ~ lit_inner ~ "\"" ~ POP }
+lit_inner  = @{ (!("\"" ~ PEEK) ~ ANY)* }
+
+// Comments
+lc_text  = @{ (!"\n" ~ ANY)* }
+bc_text  = @{ (!("*/" | "-*/") ~ ANY)* }
+hlc_text = ${ (!"\n" ~ ANY)* }
+hbc_text = ${ (!("*/" | "-*/") ~ ANY)* }
+// Not "-" character
+comment_ws = @{ !("\n" | "-") }
+// WS without newline for comments
+ws = @{ (" " | "\t")* }
+
+line_comment  = @{ "//" ~ comment_ws ~ lc_text }
+block_comment = @{ "/*" ~ comment_ws ~ bc_text ~ comment_ws ~ "*/" }
+
+html_line_comment  = @{ "//-" ~ ws ~ hlc_text }
+html_block_comment = @{ "/*-" ~ ws ~ hbc_text ~ ws ~ "-*/" }
+
+// Document
+document = { SOI ~ element_list ~ EOI }
+

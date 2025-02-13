@@ -1,0 +1,22 @@
+//- This is an HTML comment
+/*- This is also an HTML comment -*/
+
+#titlebar "Welcome to HCML!"
+p.intro "This is a simple example."
+
+ul#nav {
+    li "Home"
+    li "About"
+    li "Contact"
+}
+
+// This comment will not appear in HTML
+/* Nor this one */
+div.content {
+    h1 "Hello, World!"
+    p "This is a paragraph with a " a(href="/link") "link".
+    p "Here's a multi-line string:
+       This is line one.
+       This is line two."
+    p #"This is a raw "string"!"#
+}

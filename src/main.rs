@@ -2,11 +2,11 @@ use pest::Parser;
 use pest_derive::Parser;
 
 #[derive(Parser)]
-#[grammar = "hbml.pest"]
+#[grammar = "hcml.pest"]
 struct HbmlParser;
 
 fn main() {
-    let document = include_str!("../test/example-1.hbml");
+    let document = include_str!("../test/example-1.hcml");
 
     let result = HbmlParser::parse(Rule::document, document);
 
