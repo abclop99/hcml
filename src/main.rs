@@ -1,14 +1,11 @@
 use pest::Parser;
-use pest_derive::Parser;
 
-#[derive(Parser)]
-#[grammar = "hcml.pest"]
-struct HbmlParser;
+use hcml;
 
 fn main() {
     let document = include_str!("../test/example-1.hcml");
 
-    let result = HbmlParser::parse(Rule::document, document);
+    let result = hcml::parse(document);
 
     match result {
         Ok(pairs) => println!("Parsed successfully: {pairs:?}"),
