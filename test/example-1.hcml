@@ -5,7 +5,7 @@
 p.intro "This is a simple example."
 
 ul#nav {
-    li "Home"
+    li a(href="/") "Home"
     li "About"
     li "Contact"
 }
@@ -18,5 +18,11 @@ div.content {
     p "Here's a multi-line string:
        This is line one.
        This is line two."
-    p #"This is a raw "string"!"#
+    p #"This is a "string literal"!"#
+}
+
+![if IE] p(style="color:red;") "Error: you are on IE"
+
+svg !xml {
+  rect(x="14", y="23", width="200", height="50" fill="lime" stroke="black");
 }

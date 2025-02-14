@@ -18,26 +18,29 @@ s_id    = _{ "#" ~ id }
 s_class = _{ "." ~ class }
 
 attribute  = @{ ident ~ ("=" ~ string)? }
-attributes =  { "(" ~ (attribute ~ ","?)* ~ ")" }
+attributes = _{ "(" ~ (attribute ~ ","?)* ~ ")" }
 
-tag = {
-    (name ~ s_id? | s_id | s_class) ~ (s_class)* ~ attributes?
+tag             =  {
+    ((name ~ s_id? | s_id | s_class) ~ (s_class)* ~ attributes?)
+  | special_tag
 }
+special_tag     =  { "!" ~ (ident | conditional_tag) }
+conditional_tag = @{ "[" ~ ^"if" ~ (!"]" ~ ANY)* ~ "]" }
 
 // Elements and blocks
-html_element = { tag ~ (element | self_closing) }
+html_element = { tag ~ (element | void) }
 element      = { html_element | string | lit_string | block }
 
-block        =  { "{" ~ element_list ~ "}" }
-self_closing = _{ ";" }
+block =  { "{" ~ element_list ~ "}" }
+void  = _{ ";" }
 
 element_list = _{ element* }
 
 // Strings
 string     = ${ "\"" ~ inner ~ "\"" }
-inner      = @{ (!"\"" ~ ANY)* }
+inner      = ${ (!"\"" ~ ANY)* }
 lit_string = ${ PUSH("#"*) ~ "\"" ~ lit_inner ~ "\"" ~ POP }
-lit_inner  = @{ (!("\"" ~ PEEK) ~ ANY)* }
+lit_inner  = ${ (!("\"" ~ PEEK) ~ ANY)* }
 
 // Comments
 lc_text  = @{ (!"\n" ~ ANY)* }
@@ -56,5 +59,4 @@ html_line_comment  = @{ "//-" ~ ws ~ hlc_text }
 html_block_comment = @{ "/*-" ~ ws ~ hbc_text ~ ws ~ "-*/" }
 
 // Document
-document = { SOI ~ element_list ~ EOI }
-
+document = _{ SOI ~ element_list ~ EOI }
