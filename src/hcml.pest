@@ -2,11 +2,10 @@ WHITESPACE = _{
     " "
   | "\t"
   | NEWLINE
-  | line_comment
-  | block_comment
+  | comment
 }
 
-COMMENT = ${ html_line_comment | html_block_comment }
+COMMENT = { html_comment }
 
 // Tags
 ident = @{ ASCII_ALPHA ~ (ASCII_ALPHANUMERIC | "-" | "_")* }
@@ -17,24 +16,23 @@ class   = @{ ident }
 s_id    = _{ "#" ~ id }
 s_class = _{ "." ~ class }
 
-attribute  = @{ ident ~ ("=" ~ string)? }
+attribute  = ${ ident ~ ("=" ~ string)? }
 attributes = _{ "(" ~ (attribute ~ ","?)* ~ ")" }
 
 tag             =  {
-    ((name ~ s_id? | s_id | s_class) ~ (s_class)* ~ attributes?)
-  | special_tag
+    ((name ~ s_id? | s_id | s_class) ~ (s_class)* | special_tag) ~ attributes?
 }
 special_tag     =  { "!" ~ (ident | conditional_tag) }
 conditional_tag = @{ "[" ~ ^"if" ~ (!"]" ~ ANY)* ~ "]" }
 
 // Elements and blocks
-html_element = { tag ~ (element | void) }
-element      = { html_element | string | lit_string | block }
+element = { tag ~ (node | void) }
+node      = { element | string | lit_string | block }
 
-block =  { "{" ~ element_list ~ "}" }
+block =  { "{" ~ node_list ~ "}" }
 void  = _{ ";" }
 
-element_list = _{ element* }
+node_list = _{ node* }
 
 // Strings
 string     = ${ "\"" ~ inner ~ "\"" }
@@ -52,11 +50,16 @@ comment_ws = @{ !("\n" | "-") }
 // WS without newline for comments
 ws = @{ (" " | "\t")* }
 
+// Completely ignored
+comment = @{ line_comment | block_comment }
 line_comment  = @{ "//" ~ comment_ws ~ lc_text }
 block_comment = @{ "/*" ~ comment_ws ~ bc_text ~ comment_ws ~ "*/" }
 
+// Translated into HTML comments
+html_comment = @{ html_line_comment | html_block_comment }
 html_line_comment  = @{ "//-" ~ ws ~ hlc_text }
 html_block_comment = @{ "/*-" ~ ws ~ hbc_text ~ ws ~ "-*/" }
 
 // Document
-document = _{ SOI ~ element_list ~ EOI }
+document = _{ SOI ~ node_list ~ EOI }
+

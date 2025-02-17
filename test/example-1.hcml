@@ -1,7 +1,7 @@
 //- This is an HTML comment
 /*- This is also an HTML comment -*/
 
-#titlebar "Welcome to HCML!"
+h1#titlebar(a="b") "Welcome to HCML!"
 p.intro "This is a simple example."
 
 ul#nav {

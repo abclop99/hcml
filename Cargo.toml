@@ -4,5 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+getset = "0.1.4"
+itertools = "0.14.0"
 pest = "2.7.15"
 pest_derive = "2.7.15"
+smart-default = "0.7.1"
+thiserror = "2.0.11"
