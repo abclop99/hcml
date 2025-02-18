@@ -33,7 +33,7 @@ fn parse_document(pair: Pair<Rule>) -> Box<dyn Node> {
     match pair.as_rule() {
         EOI => todo!("EOI"),
         COMMENT => Box::new(create_comment(pair.into_inner())), //comment::handle_comment(pair.into_inner()),
-        node => create_node(pair.into_inner()),
+        node => create_node(pair.into_inner()).either(|n| n, |b| Box::new(b)),
         rule => {
             unimplemented!("Unexpected {rule:?} in document: {pair:?}")
         }

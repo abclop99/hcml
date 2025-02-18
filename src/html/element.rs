@@ -1,6 +1,6 @@
 //! Elements
 
-use std::fmt;
+use std::fmt::{self, Display, Formatter};
 
 use smart_default::SmartDefault;
 
@@ -58,19 +58,26 @@ impl Element {
 
         Self { children, ..self }
     }
+
+    pub fn with_void(self, void: bool) -> Self {
+        Self { void, ..self }
+    }
 }
 
 impl Node for Element {}
 impl fmt::Display for Element {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         if self.void {
-            todo!("Void element")
+            debug_assert!(
+                self.children.is_empty(),
+                "Void nodes can't have any children"
+            );
+            write!(f, "<{0} {1}>", self.name, self.attributes)
         } else {
-            write!(
-                f,
-                "<{0} {1}>{2}<{0}>",
-                self.name, self.attributes, self.children
-            )
+            // Surround children string with spaces
+            let mut children = format!(" {} ", self.children);
+
+            write!(f, "<{0} {1}>{2}<{0}>", self.name, self.attributes, children)
         }
     }
 }
