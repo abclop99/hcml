@@ -20,3 +20,10 @@ div.content {
        This is line two."
     p #"This is a "string literal"!"#
 }
+
+![if IE] p(style="color:red;") "Error: you are on IE"
+
+svg !xml {
+  rect(x="14", y="23", width="200", height="50" fill="lime" stroke="black");
+}
+

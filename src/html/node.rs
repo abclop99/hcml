@@ -12,7 +12,6 @@ pub struct NodeList {
 }
 
 impl Node for NodeList {}
-
 impl Display for NodeList {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         for node in &self.inner {
@@ -24,8 +23,9 @@ impl Display for NodeList {
 }
 
 impl NodeList {
-    pub fn new(nodes: Vec<Box<dyn Node>>) -> Self {
-        Self { inner: nodes }
+    /// Create a new empty node list
+    pub fn new() -> Self {
+        Self { inner: vec![] }
     }
 
     // Pushes a node to the end of the list
@@ -41,7 +41,7 @@ impl NodeList {
 
 impl From<Vec<Box<dyn Node>>> for NodeList {
     fn from(value: Vec<Box<dyn Node>>) -> Self {
-        Self::new(value)
+        Self { inner: value }
     }
 }
 

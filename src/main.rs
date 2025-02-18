@@ -8,7 +8,10 @@ fn main() {
     let result = hcml::parser::parse(document);
 
     match result {
-        Ok(html) => println!("Parsed successfully: {html}"),
-        Err(e) => println!("Parse failed: {e}"),
+        Ok(html) => {
+            eprintln!("Parsed successfully:");
+            println!("{html}")
+        }
+        Err(e) => eprintln!("Parse failed: {e}"),
     }
 }
