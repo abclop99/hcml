@@ -1,0 +1,52 @@
+name: Rust
+
+on:
+  workflow_dispatch: # allows manual triggering
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    name: Build and test project
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: moonrepo/setup-rust@v1.2.1
+        with:
+          bins: cargo-nextest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Tests
+        run: cargo nextest run --verbose
+
+  clippy:
+    name: Clippy lints
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: moonrepo/setup-rust@v1.2.1
+        with:
+          components: clippy
+      - name: Clippy
+        run: cargo clippy
+
+  msrv:
+    name: Check MSRV
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: moonrepo/setup-rust@v1.2.1
+        with:
+          bins: cargo-msrv
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify msrv
+        run: cargo msrv verify
