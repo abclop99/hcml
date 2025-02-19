@@ -1,8 +1,12 @@
 [package]
 name = "hcml"
 version = "0.1.0"
+description = "Translates HCML to HTML"
 edition = "2021"
 rust-version = "1.78.0"
+authors = [ "Aaron Li <aaron.li@genvira.com>" ]
+license = "EUPL"
+repository = "https://github.com/abclop99/hcml"
 
 [dependencies]
 clap = { version = "4.5.30", features = ["derive"] }
