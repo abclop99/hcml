@@ -54,5 +54,12 @@ pub(crate) struct HcmlParser;
 #[derive(Error, Debug)]
 pub enum HcmlError {
     #[error("Error parsing document: {0}")]
-    ParseError(#[from] PestError<Rule>),
+    ParseError(#[from] Box<PestError<Rule>>),
+}
+
+// Box the [`PestError`] so other [`HcmlError`]s can be smaller
+impl From<PestError<Rule>> for HcmlError {
+    fn from(value: PestError<Rule>) -> Self {
+        Self::ParseError(Box::new(value))
+    }
 }
