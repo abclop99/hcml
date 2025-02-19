@@ -1,6 +1,6 @@
 //! Elements
 
-use std::fmt::{self, Display, Formatter};
+use std::fmt::{self};
 
 use smart_default::SmartDefault;
 
@@ -75,7 +75,7 @@ impl fmt::Display for Element {
             write!(f, "<{0} {1}>", self.name, self.attributes)
         } else {
             // Surround children string with spaces
-            let mut children = format!(" {} ", self.children);
+            let children = format!(" {} ", self.children);
 
             write!(
                 f,

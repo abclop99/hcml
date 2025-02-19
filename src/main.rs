@@ -4,8 +4,6 @@ use std::{fs, process};
 
 use clap::Parser;
 
-use hcml;
-
 mod cli;
 
 fn main() {

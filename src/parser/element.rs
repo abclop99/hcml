@@ -1,6 +1,6 @@
 //! Handles HBML elements
 
-use pest::iterators::{Pair, Pairs};
+use pest::iterators::Pairs;
 use tag::{extract_tag, Tag};
 
 use crate::{

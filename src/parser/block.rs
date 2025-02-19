@@ -1,14 +1,11 @@
 //! Handles HBML blocks
 
 use either::Either;
-use pest::iterators::{Pair, Pairs};
+use pest::iterators::Pairs;
 
 use crate::{
-    html::{
-        element::Element,
-        node::{Node, NodeList},
-    },
-    parser::{create_node, element::create_element, string::create_string, Rule},
+    html::node::NodeList,
+    parser::{create_node, Rule},
 };
 
 /// Handles a HBML block

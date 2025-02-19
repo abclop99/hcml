@@ -1,13 +1,10 @@
 //! Handles HBML tags
 
-use pest::iterators::{Pair, Pairs};
+use pest::iterators::Pairs;
 use smart_default::SmartDefault;
 
 use crate::{
-    html::{
-        attribute::{Attribute, AttributeList},
-        element::Element,
-    },
+    html::attribute::{Attribute, AttributeList},
     parser::{string::create_string, Rule},
 };
 
@@ -30,7 +27,7 @@ pub struct Tag {
 ///
 /// # Parameters:
 /// - pairs: The inner of the comment pair
-pub(crate) fn extract_tag(mut inner: Pairs<Rule>) -> Tag {
+pub(crate) fn extract_tag(inner: Pairs<Rule>) -> Tag {
     let mut tag = Tag::default();
 
     for pair in inner {

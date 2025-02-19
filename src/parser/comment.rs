@@ -1,6 +1,6 @@
 //! Handles HBML comments
 
-use pest::iterators::{Pair, Pairs};
+use pest::iterators::Pairs;
 
 use crate::{html::comment::Comment, parser::Rule};
 
