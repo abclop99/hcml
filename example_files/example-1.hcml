@@ -5,18 +5,18 @@ h1#titlebar(a="b") "Welcome to HCML!"
 p.intro "This is a simple example."
 
 ul#nav {
-    li a(href="/") "Home"
-    li "About"
-    li "Contact"
+	li a(href="/") "Home"
+	li "About"
+	li "Contact"
 }
 
 // This comment will not appear in HTML
 /* Nor this one */
 div.content {
-    h1 "Hello, World!"
-    p "This is a paragraph with a " a(href="/link") "link".
-    p "Here's a multi-line string:
-       This is line one.
-       This is line two."
-    p #"This is a "string literal"!"#
+	h1 "Hello, World!"
+	p "This is a paragraph with a " a(href="/link") "link".
+	p "Here's a multi-line string:
+		This is line one.
+		This is line two."
+	p #"This is a "string literal"!"#
 }
