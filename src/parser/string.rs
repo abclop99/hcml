@@ -25,5 +25,5 @@ pub(crate) fn create_string(mut inner: Pairs<Rule>) -> String {
         inner_pair.as_rule()
     );
 
-    inner_pair.as_str().to_owned()
+    inner_pair.as_str().trim().to_owned()
 }

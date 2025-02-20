@@ -26,7 +26,7 @@ pub(crate) fn create_comment(inner: Pairs<Rule>) -> Comment {
     );
 
     // Get text
-    let text = pair.as_span().as_str();
+    let text = pair.as_span().as_str().trim();
 
     // Create comment node
     Comment::new(text)
