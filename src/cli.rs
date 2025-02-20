@@ -8,6 +8,7 @@ use clap::Parser;
 #[derive(Parser, Debug)]
 #[command(version, about)]
 pub struct Cli {
-    /// The file to convert
+    /// The file to convert.
+    /// Use `-` to read from stdin.
     pub file: PathBuf,
 }

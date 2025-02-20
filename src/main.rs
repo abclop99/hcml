@@ -1,6 +1,11 @@
 //! A program to convert HCML to HTML.
 
-use std::{fs, process};
+use std::{
+    fs::File,
+    io::{self, BufReader, Read},
+    path::PathBuf,
+    process,
+};
 
 use clap::Parser;
 
@@ -9,7 +14,15 @@ mod cli;
 fn main() {
     let args = cli::Cli::parse();
 
-    let document = match fs::read_to_string(args.file) {
+    // Get reader from file or stdin
+    let reader: BufReader<Box<dyn Read>> = if args.file == PathBuf::from("-") {
+        BufReader::new(Box::new(io::stdin()))
+    } else {
+        BufReader::new(Box::new(File::open(args.file).expect("Error opening file")))
+    };
+
+    // Read entire file
+    let document = match io::read_to_string(reader) {
         Ok(doc) => doc,
         Err(e) => {
             eprintln!("Error reading file: {e}");
