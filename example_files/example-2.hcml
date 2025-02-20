@@ -18,7 +18,7 @@ div.content {
     p "Here's a multi-line string:
        This is line one.
        This is line two."
-    p #"This is a "string literal"!"#
+    p r#"This is a "string literal"!"#
 }
 
 ![if IE] p(style="color:red;") "Error: you are on IE"
