@@ -32,6 +32,7 @@ pub(crate) fn extract_tag(inner: Pairs<Rule>) -> Tag {
 
     for pair in inner {
         match pair.as_rule() {
+            Rule::special_tag => todo!("Tag > special_tag"),
             Rule::name => tag.name = pair.as_str().to_owned(),
             Rule::id => tag.attributes.push(Attribute {
                 name: "id".to_owned(),
