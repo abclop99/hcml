@@ -7,6 +7,7 @@ rust-version = "1.78.0"
 authors = [ "Aaron Li <aaron.li@genvira.com>" ]
 license = "EUPL"
 repository = "https://github.com/abclop99/hcml"
+publish = false
 
 [dependencies]
 clap = { version = "4.5.30", features = ["derive"] }
