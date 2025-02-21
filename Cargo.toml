@@ -21,3 +21,7 @@ thiserror = "2.0.11"
 
 [dev-dependencies]
 html-compare-rs = "0.3.0"
+
+[package.metadata.release]
+sign-commit = true
+sign-tag = true
