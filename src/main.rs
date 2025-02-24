@@ -4,7 +4,7 @@ use std::{
     fs::File,
     io::{self, BufReader, Read},
     path::PathBuf,
-    process,
+    process::{self, exit},
 };
 
 use clap::Parser;
@@ -37,6 +37,9 @@ fn main() {
             eprintln!("Parsed successfully:");
             println!("{html}")
         }
-        Err(e) => eprintln!("Parse failed: {e}"),
+        Err(e) => {
+            eprintln!("Parse failed: {e}");
+            exit(3);
+        }
     }
 }
