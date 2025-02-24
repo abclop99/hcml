@@ -42,7 +42,9 @@ pub(crate) fn create_element(mut inner: Pairs<Rule>) -> Element {
     let tag = extract_tag(tag.into_inner());
 
     // Get content
-    let content = inner.next().expect("Content");
+    let content = inner
+        .next()
+        .unwrap_or_else(|| panic!("Element content missing {}", inner.as_str()));
 
     let (children, void) = match content.as_rule() {
         Rule::node => {
