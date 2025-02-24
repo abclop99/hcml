@@ -37,7 +37,7 @@ node_list = _{ node* }
 // Strings
 string     = ${ "\"" ~ inner ~ "\"" }
 inner      = ${ (!"\"" ~ ANY)* }
-lit_string = ${ "r" ~ PUSH("#"*) ~ "\"" ~ lit_inner ~ "\"" ~ POP }
+lit_string = ${ PUSH("#"*) ~ "\"" ~ lit_inner ~ "\"" ~ POP }
 lit_inner  = ${ (!("\"" ~ PEEK) ~ ANY)* }
 
 // Comments
