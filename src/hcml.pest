@@ -30,7 +30,7 @@ element = { tag ~ (node | void) }
 node      = { element | string | lit_string | block }
 
 block =  { "{" ~ node_list ~ "}" }
-void  = _{ ";" }
+void  = { ";" }
 
 node_list = _{ node* }
 
