@@ -25,5 +25,9 @@ pub(crate) fn create_string(mut inner: Pairs<Rule>) -> String {
         inner_pair.as_rule()
     );
 
-    inner_pair.as_str().trim().to_owned()
+    match inner_pair.as_rule() {
+        Rule::inner => inner_pair.as_str().trim().to_owned(),
+        Rule::lit_inner => inner_pair.as_str().to_owned(),
+        rule => panic!("Unexpected string inner rule {rule:?}. Expected inner or lit_inner"),
+    }
 }
