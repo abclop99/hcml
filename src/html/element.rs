@@ -74,8 +74,7 @@ impl fmt::Display for Element {
             );
             write!(f, "<{0} {1}>", self.name, self.attributes)
         } else {
-            // Surround children string with spaces
-            let children = format!(" {} ", self.children);
+            let children = format!("{}", self.children);
 
             write!(
                 f,
