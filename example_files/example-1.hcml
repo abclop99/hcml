@@ -18,5 +18,5 @@ div.content {
 	p "Here's a multi-line string:
 		This is line one.
 		This is line two."
-	p r#"This is a "string literal"!"#
+	p #"This is a "string literal"!"#
 }
