@@ -34,7 +34,6 @@ fn main() {
 
     match result {
         Ok(html) => {
-            eprintln!("Parsed successfully:");
             println!("{html}")
         }
         Err(e) => {
